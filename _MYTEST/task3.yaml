@@ -1,0 +1,16 @@
+--- 
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app1
+  labels:
+    purpose: demonstrate-command
+spec:
+  containers:
+  - name: app1cont
+    image: evolvecybertraining/args-app:v1
+    command: []
+    args:
+    - -Q
+    - --dep
+    - test

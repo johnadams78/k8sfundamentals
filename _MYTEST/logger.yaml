@@ -1,0 +1,237 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: logger
+  managedFields:
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:labels:
+          .: {}
+          f:app: {}
+      f:spec:
+        f:containers:
+          k:{"name":"app"}:
+            .: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+            f:volumeMounts:
+              .: {}
+              k:{"mountPath":"/var/log"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+          k:{"name":"logger"}:
+            .: {}
+            f:args: {}
+            f:image: {}
+            f:imagePullPolicy: {}
+            f:name: {}
+            f:resources: {}
+            f:terminationMessagePath: {}
+            f:terminationMessagePolicy: {}
+            f:volumeMounts:
+              .: {}
+              k:{"mountPath":"/var/log"}:
+                .: {}
+                f:mountPath: {}
+                f:name: {}
+        f:dnsPolicy: {}
+        f:enableServiceLinks: {}
+        f:imagePullSecrets:
+          .: {}
+          k:{"name":"myregistrykey"}:
+            .: {}
+            f:name: {}
+        f:nodeName: {}
+        f:preemptionPolicy: {}
+        f:priority: {}
+        f:restartPolicy: {}
+        f:schedulerName: {}
+        f:securityContext: {}
+        f:serviceAccount: {}
+        f:serviceAccountName: {}
+        f:terminationGracePeriodSeconds: {}
+        f:tolerations: {}
+        f:volumes:
+          .: {}
+          k:{"name":"cache-volume"}:
+            .: {}
+            f:emptyDir: {}
+            f:name: {}
+          k:{"name":"default-token-nrvzs"}:
+            .: {}
+            f:name: {}
+            f:secret:
+              .: {}
+              f:defaultMode: {}
+              f:secretName: {}
+      f:status:
+        f:qosClass: {}
+    manager: kubectl-client-side-apply
+    operation: Update
+    time: "2022-01-04T02:35:35Z"
+  - apiVersion: v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:conditions:
+          .: {}
+          k:{"type":"ContainersReady"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Initialized"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"PodScheduled"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+          k:{"type":"Ready"}:
+            .: {}
+            f:lastProbeTime: {}
+            f:lastTransitionTime: {}
+            f:status: {}
+            f:type: {}
+        f:containerStatuses: {}
+        f:hostIP: {}
+        f:phase: {}
+        f:podIP: {}
+        f:podIPs:
+          .: {}
+          k:{"ip":"10.42.0.1"}:
+            .: {}
+            f:ip: {}
+        f:startTime: {}
+    manager: kubelet
+    operation: Update
+    time: "2022-01-04T02:35:38Z"
+  name: logger
+  namespace: default
+  resourceVersion: "50638"
+  selfLink: /api/v1/namespaces/default/pods/logger
+  uid: 6c523417-00e4-49ea-8416-87c71434bdf2
+spec:
+  containers:
+  - image: evolvecybertraining/logger-app
+    imagePullPolicy: Always
+    name: app
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: default-token-nrvzs
+      readOnly: true
+    - mountPath: /var/log
+      name: cache-volume
+  - image: busybox
+    name: logger
+    arg:
+    - tail
+    - f
+    - /var/log/input.log
+    resources: {}
+    terminationMessagePath: /dev/termination-log
+    terminationMessagePolicy: File
+    volumeMounts:
+    - mountPath: /var/log
+      name: cache-volume
+    - mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      name: default-token-nrvzs
+      readOnly: true
+
+  dnsPolicy: ClusterFirst
+  enableServiceLinks: true
+  imagePullSecrets:
+  - name: myregistrykey
+  nodeName: cka-cluster429-node2
+  preemptionPolicy: PreemptLowerPriority
+  priority: 0
+  restartPolicy: Always
+  schedulerName: default-scheduler
+  securityContext: {}
+  serviceAccount: default
+  serviceAccountName: default
+  terminationGracePeriodSeconds: 30
+  tolerations:
+  - effect: NoExecute
+    key: node.kubernetes.io/not-ready
+    operator: Exists
+    tolerationSeconds: 300
+  - effect: NoExecute
+    key: node.kubernetes.io/unreachable
+    operator: Exists
+    tolerationSeconds: 300
+  volumes:
+  - name: default-token-nrvzs
+    secret:
+      defaultMode: 420
+      secretName: default-token-nrvzs
+  - name: cache-volume
+    emptyDir: {}
+status:
+  conditions:
+  - lastProbeTime: null
+    lastTransitionTime: "2022-01-04T02:35:35Z"
+    status: "True"
+    type: Initialized
+  - lastProbeTime: null
+    lastTransitionTime: "2022-01-04T02:35:38Z"
+    status: "True"
+    type: Ready
+  - lastProbeTime: null
+    lastTransitionTime: "2022-01-04T02:35:38Z"
+    status: "True"
+    type: ContainersReady
+  - lastProbeTime: null
+    lastTransitionTime: "2022-01-04T02:35:35Z"
+    status: "True"
+    type: PodScheduled
+  containerStatuses:
+  - containerID: docker://c3673975152b7585cb5f00353e61610d0ac10875a4cccc1fe840c5b8cbbb45c3
+    image: evolvecybertraining/logger-app:latest
+    imageID: docker-pullable://evolvecybertraining/logger-app@sha256:10105857e6514fb200f2da62cd3b2133c79d9a4c8cf007ade68b1c8e7d210253
+    lastState: {}
+    name: app
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-01-04T02:35:37Z"
+  - containerID: docker://32ea33208f30f4f35363abdd8a5ecb7a786f93dcc162801c7ce7ab3a174f7570
+    image: busybox:latest
+    imageID: docker-pullable://busybox@sha256:5acba83a746c7608ed544dc1533b87c737a0b0fb730301639a0179f9344b1678
+    lastState: {}
+    name: logger
+    ready: true
+    restartCount: 0
+    started: true
+    state:
+      running:
+        startedAt: "2022-01-04T02:35:38Z"
+  hostIP: 172.16.3.42
+  phase: Running
+  podIP: 10.42.0.1
+  podIPs:
+  - ip: 10.42.0.1
+  qosClass: BestEffort
+  startTime: "2022-01-04T02:35:35Z"

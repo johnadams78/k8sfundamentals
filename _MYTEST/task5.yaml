@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: messengerapp
+  name: testapp
+  namespace: test
+spec:
+  containers:
+  - image: nginx
+    name: messengerapp
+    resources:
+      requests:
+        memory: "1Gi"
+        cpu: "200m"
+    ports:
+    - containerPort: 9090
+      name: http
+      protocol: TCP

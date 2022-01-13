@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dev-jenkins
+spec:
+  containers:
+    - name: jenkins
+      image: jenkins/jenkins
+      volumeMounts:
+        - mountPath: "/var/lib/jenkins"
+          name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: data-volume

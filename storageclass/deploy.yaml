@@ -1,44 +1,63 @@
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: mysqlsecret
+# type: Opaque
+# stringData:
+#   password: P@ssw0rd!
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: mysqldeployment
+#   labels:
+#     app: mysql
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: mysql
+#   strategy:
+#     type: Recreate
+#   template:
+#     metadata:
+#       labels:
+#         app: mysql
+#     spec:
+#       containers:
+#         - name: mysql
+#           image: mysql
+#           ports:
+#             - containerPort: 3306
+#           volumeMounts:
+#             - mountPath: "/var/lib/mysql"
+#               name: mysqlvolume
+#           env:
+#             - name: MYSQL_ROOT_PASSWORD
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: mysqlsecret
+#                   key: password
+#       volumes:
+#         - name: mysqlvolume
+#           persistentVolumeClaim:
+#             claimName: mysqlclaim
+
+kind: Pod
 apiVersion: v1
-kind: Secret
 metadata:
-  name: mysqlsecret
-type: Opaque
-stringData:
-  password: P@ssw0rd!
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: mysqldeployment
-  labels:
-    app: mysql
+  name: test
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: mysql
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: mysql
-    spec:
-      containers:
-        - name: mysql
-          image: mysql
-          ports:
-            - containerPort: 3306
-          volumeMounts:
-            - mountPath: "/var/lib/mysql"
-              name: mysqlvolume
-          env:
-            - name: MYSQL_ROOT_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysqlsecret
-                  key: password
-      volumes:
-        - name: mysqlvolume
-          persistentVolumeClaim:
-            claimName: mysqlclaim
+  volumes:
+    - name: mysqlclaim1
+      persistentVolumeClaim:
+       claimName: mysqlclaim0
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: mysqlclaim1 

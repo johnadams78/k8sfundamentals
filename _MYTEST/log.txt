@@ -1,0 +1,3 @@
+NAME   CPU(cores)   MEMORY(bytes)   
+app1   0m           1Mi             
+web    2m           2Mi             

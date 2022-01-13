@@ -1,21 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: firstdeployment
+  creationTimestamp: null
   labels:
-    team: development
+    app: firstdeployment
+  name: firstdeployment
 spec:
   replicas: 3
   selector:
     matchLabels:
       app: frontend
+  strategy: {}
   template:
     metadata:
+      creationTimestamp: null
       labels:
         app: frontend
     spec:
       containers:
-      - name: nginx
-        image: nginx:latest
-        ports:
-        - containerPort: 80
+      - image: nginx
+        name: nginx
+        resources: {}
+status: {}
